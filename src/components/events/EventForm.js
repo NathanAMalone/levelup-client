@@ -1,6 +1,6 @@
-import { createEvent } from "@testing-library/react"
 import { useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
+import { createEvent } from "../../managers/EventManager"
 
 
 export const EventForm = () => {
@@ -23,10 +23,15 @@ export const EventForm = () => {
 
     useEffect(() => {
         // TODO: Get the game types, then set the state
+        
     }, [])
 
     const changeEventState = (domEvent) => {
         // TODO: Complete the onChange function
+        const copy = {...currentEvent}
+        const propertyToModify = domEvent.target.id
+        copy[propertyToModify] = domEvent.target.value
+        setCurrentEvent(copy)
     }
 
     return (
@@ -34,9 +39,45 @@ export const EventForm = () => {
             <h2 className="eventForm__title">Register New Event</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="title">Title: </label>
-                    <input type="text" name="title" required autoFocus className="form-control"
-                        value={currentEvent.title}
+                    <label htmlFor="title">Game: </label>
+                    <input type="text" id="gameId" required autoFocus className="form-control"
+                        value={currentEvent.gameId}
+                        onChange={changeEventState}
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="title">Organizer: </label>
+                    <input type="text" id="organizerId" required autoFocus className="form-control"
+                        value={currentEvent.organizerId}
+                        onChange={changeEventState}
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="title">Description: </label>
+                    <input type="text" id="description" required autoFocus className="form-control"
+                        value={currentEvent.description}
+                        onChange={changeEventState}
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="title">Date: </label>
+                    <input type="text" id="date" required autoFocus className="form-control"
+                        value={currentEvent.date}
+                        onChange={changeEventState}
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="title">Time: </label>
+                    <input type="text" id="time" required autoFocus className="form-control"
+                        value={currentEvent.time}
                         onChange={changeEventState}
                     />
                 </div>
@@ -50,7 +91,7 @@ export const EventForm = () => {
                     evt.preventDefault()
 
                     const event = {
-                        description: currentEvent.maker,
+                        description: currentEvent.description,
                         date: currentEvent.date,
                         time: currentEvent.time,
                         game: parseInt(currentEvent.gameId),

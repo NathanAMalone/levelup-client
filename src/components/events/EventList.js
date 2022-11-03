@@ -22,10 +22,10 @@ export const EventList = (props) => {
             {
                 events.map(evt => {
                     return <section key={`event--${evt.id}`} className="event">
-                        <div className="event__date">{evt.date} by {evt?.organizer?.user}</div>
+                        <div className="event__date">{evt.date} by {evt?.organizer?.user?.username}</div>
                         <div className="event__time">Starts at {evt.time}</div>
-                        <div className="event__title">{evt.game.title}</div>
-                        <div className="event__description">{evt.description}</div>
+                        <div className="event__title">Title: {evt.game.title}</div>
+                        <div className="event__description">Description: {evt.description}</div>
                         <div className="event__description">Who will be there: {evt?.gamers?.user}</div>
                     </section>
                 })
