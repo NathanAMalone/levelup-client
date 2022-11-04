@@ -7,6 +7,15 @@ export const getEvents = () => {
         .then(response => response.json())
 }
 
+export const getOneEvent = (eventId) => {
+    return fetch(`http://localhost:8000/events/${eventId}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })
+        .then(response => response.json())
+}
+
 export const createEvent = (event) => {
     return fetch("http://localhost:8000/events", { 
         headers:{
@@ -17,6 +26,18 @@ export const createEvent = (event) => {
         body: JSON.stringify(event),
     })
         .then(res => res.json())
+}
+
+export const updateEvent = (event, eventId) => {
+    return fetch(`http://localhost:8000/events/${eventId}`, { 
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`,
+            "Content-type": "application/json"
+        },
+        method: "PUT", 
+        body: JSON.stringify(event)
+    })
+        
 }
 
 export const getGames = () => {

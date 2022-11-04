@@ -27,7 +27,7 @@ export const GameForm = () => {
 
     const changeGameState = (domEvent) => {
         // TODO: Complete the onChange function
-            const copy  = {...currentGame}
+            const copy = {...currentGame}
             const propertyToModify = domEvent.target.id
             copy[propertyToModify] = domEvent.target.value
             setCurrentGame(copy)
@@ -35,7 +35,7 @@ export const GameForm = () => {
 
     return (
         <form className="gameForm">
-            <h2 className="gameForm__title">Register New Game</h2>
+            <h2 className="gameForm__title">New Game</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="title">Title: </label>
