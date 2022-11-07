@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
-import { getOneEvent } from "../../managers/EventManager.js"
-import { createGame, getOneGame, updateGame } from '../../managers/GameManager.js'
+import { deleteEvent, getOneEvent, updateEvent } from "../../managers/EventManager.js"
 
 
 export const UpdateEventForm = () => {
@@ -22,7 +21,11 @@ export const UpdateEventForm = () => {
         game: {
             title: ""
         },
-        organizer: 0
+        organizer: {
+            user: {
+                username: "",
+            }
+        }
     })
 
     useEffect(() => {
@@ -46,7 +49,13 @@ export const UpdateEventForm = () => {
                     <label htmlFor="gameId">Game: </label>
                     <input type="text" id="game.title" required autoFocus className="form-control"
                         value={currentEvent.game.title}
-                        onChange={changeEventState}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentEvent}
+                                copy.game.title = evt.target.value
+                                setCurrentEvent(copy)
+                            }
+                        }
                     />
                 </div>
             </fieldset>
@@ -54,15 +63,21 @@ export const UpdateEventForm = () => {
                 <div className="form-group">
                     <label htmlFor="organizer">Organizer: </label>
                     <input type="text" id="organizer.user.username" required autoFocus className="form-control"
-                        value={currentEvent.organizer.user?.username}
-                        onChange={changeEventState}
+                        value={currentEvent.organizer.user.username}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentEvent}
+                                copy.organizer.user.username = evt.target.value
+                                setCurrentEvent(copy)
+                            }
+                        }
                     />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="description">Description: </label>
-                    <input type="number" id="description" required autoFocus className="form-control"
+                    <input type="text" id="description" required autoFocus className="form-control"
                         value={currentEvent.description}
                         onChange={changeEventState}
                     />
@@ -71,7 +86,7 @@ export const UpdateEventForm = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="date">Date: </label>
-                    <input type="number" id="date" required autoFocus className="form-control"
+                    <input type="text" id="date" required autoFocus className="form-control"
                         value={currentEvent.date}
                         onChange={changeEventState}
                     />
@@ -80,9 +95,9 @@ export const UpdateEventForm = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="time">Time: </label>
-                    <input type="number" id="time" required autoFocus className="form-control"
+                    <input type="text" id="time" required autoFocus className="form-control"
                         value={currentEvent.time}
-                        onChange={changeEventState}
+                        onChange={changeEventState} 
                     />
                 </div>
             </fieldset>
@@ -94,19 +109,29 @@ export const UpdateEventForm = () => {
                     // Prevent form from being submitted
                     evt.preventDefault()
 
-                    const game = {
+                    const event = {
                         description: currentEvent.description,
                         date: currentEvent.date,
                         time: currentEvent.time,
-                        game: parseInt(currentEvent.gameId),
-                        organizer: parseInt(currentEvent.organizerId)
+                        game: currentEvent.game,
+                        organizer: currentEvent.organizer
                     }
 
                     // Send POST request to your API
-                    updateGame(game, eventId)
-                        .then(() => navigate("/games"))
+                    updateEvent(event, eventId)
+                        .then(() => navigate("/events"))
                 }}
-                className="btn btn-primary">Create</button>
+                className="btn btn-primary">Update</button>
+            <button type="submit"
+                onClick={evt => {
+                    // Prevent form from being submitted
+                    evt.preventDefault()
+
+                    // Send POST request to your API
+                    deleteEvent(eventId)
+                        .then(() => navigate("/events"))
+            }}
+                className="btn btn-primary">Delete</button>
         </form>
     )
 }

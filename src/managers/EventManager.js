@@ -40,6 +40,37 @@ export const updateEvent = (event, eventId) => {
         
 }
 
+export const joinEvent = (eventId) => {
+    return fetch(`http://localhost:8000/events/${eventId}/signup`, { 
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`,
+            "Content-type": "application/json"
+        },
+        method: "POST", 
+        body: JSON.stringify()
+    })
+        
+}
+
+export const deleteEvent = (eventId) => {
+    return fetch(`http://localhost:8000/events/${eventId}`, { 
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`,
+        },
+        method: "DELETE", 
+    })
+        
+}
+
+export const leaveEvent = (eventId) => {
+    return fetch(`http://localhost:8000/events/${eventId}/leave`, { 
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`,
+        },
+        method: "DELETE", 
+    })
+}
+
 export const getGames = () => {
     return fetch("http://localhost:8000/games", { 
         headers:{
