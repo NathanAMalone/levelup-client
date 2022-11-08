@@ -103,17 +103,7 @@ export const UpdateGameForm = () => {
                     updateGame(game, gameId)
                         .then(() => navigate("/games"))
                 }}
-                className="btn btn-primary">Update</button>
-            <button type="submit"
-                onClick={evt => {
-                    // Prevent form from being submitted
-                    evt.preventDefault()
-
-                    // Send POST request to your API
-                    deleteGame(gameId)
-                        .then(() => navigate("/games"))
-            }}
-                className="btn btn-primary">Delete</button>
+                className="btn btn-primary">Update</button>         
         </form>
     )
 }

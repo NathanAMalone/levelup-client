@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { getGames } from "../../managers/GameManager.js"
+import { getEvents } from "../../managers/EventManager.js"
+import { deleteGame, getGames } from "../../managers/GameManager.js"
 
 export const GameList = (props) => {
     const [ games, setGames ] = useState([])
@@ -28,6 +29,16 @@ export const GameList = (props) => {
                         </div>
                         <div className="game__players">{game.number_of_players} players needed</div>
                         <div className="game__skillLevel">Skill level is {game.skill_level}</div>
+                        <button type="submit"
+                            onClick={evt => {
+                             // Prevent form from being submitted
+                            evt.preventDefault()
+
+                            // Send POST request to your API
+                            deleteGame(game.id)
+                                .then(() => window.location.reload())
+                            }}
+                            className="btn btn-primary">Delete</button>
                     </section>
                 })
             }
